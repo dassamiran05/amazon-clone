@@ -41,7 +41,7 @@ const Cart = ({ cartItems, handleDeleteproduct, handleDelete, handleAddtoCart })
                                         cartItems.map(item => (
                                             <div key={item.id} className='w-full border-b-[1px] border-b-gray-300 p-4 flex  items-center gap-5'>
                                                 <div className='w-1/5'>
-                                                    <img className="w-full h-44 object-contain" src={item.thumbnail} alt={item.title} />
+                                                    <img className="w-full h-44 object-contain" src={item.image} alt={item.title} />
                                                 </div>
                                                 <div className='w-4/5 flex justify-between'>
                                                     <div className='max-w-content'>

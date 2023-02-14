@@ -84,7 +84,7 @@ const FooterMiddle = () => {
                 </div>
             </div>
             <div className='w-full flex items-center justify-center'>
-                <ul className='flex gap-3'>
+                <ul className='flex gap-3 flex-wrap justify-center'>
                     <li className='text-xs cursor-pointer hover:underline duration-100'>Australia</li>
                     <li className='text-xs cursor-pointer hover:underline duration-100'>Brazil</li>
                     <li className='text-xs cursor-pointer hover:underline duration-100'>Canada</li>

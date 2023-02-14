@@ -7,6 +7,11 @@ import { productsdata } from './api/api';
 import Cart from './pages/Cart';
 import Signin from './pages/Signin';
 import Register from './pages/Register';
+import { Toaster } from 'react-hot-toast';
+import Checkout from './pages/Checkout';
+import PrivateRoute from './privateRoute/PrivateRoute';
+// import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+// import app from './firebase/firebase.config';
 
 const Main = ({ AllcartItems }) => {
   return (
@@ -18,11 +23,17 @@ const Main = ({ AllcartItems }) => {
   )
 }
 
+
+// const auth = getAuth(app);
 function App() {
+
+
 
 
   const [cartItems, setCartItems] = useState([]);
 
+
+  //Add to cart functionality
   const handleAddtoCart = (product) => {
     const exists = cartItems.find((x) => x.id === product.id);
     if (exists) {
@@ -86,7 +97,9 @@ function App() {
       <Route path="/" element={<Main AllcartItems={cartItems.length} />}>
         <Route index element={<Home cartItems={cartItems} handleAddtoCart={handleAddtoCart} handleDelete={handleDelete} />} loader={productsdata}>
         </Route>
-        <Route path="/cart" element={<Cart cartItems={cartItems} handleDelete={handleDelete} handleDeleteproduct={handleDeleteproduct} handleAddtoCart={handleAddtoCart}/>}>
+        <Route path="/cart" element={<Cart cartItems={cartItems} handleDelete={handleDelete} handleDeleteproduct={handleDeleteproduct} handleAddtoCart={handleAddtoCart} />}>
+        </Route>
+        <Route path="/checkout" element={<PrivateRoute><Checkout ></Checkout></PrivateRoute>}>
         </Route>
       </Route>
       <Route path="/signin" element={<Signin />}>
@@ -102,6 +115,7 @@ function App() {
   return (
     <div className="font-bodyFont bg-gray-100">
       <RouterProvider router={router}></RouterProvider>
+      <Toaster />
     </div>
   );
 }

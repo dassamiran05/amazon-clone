@@ -6,23 +6,14 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import './products.css'
-// import useCart from '../../hooks/useCart';
 
 const Products = ({handleAddtoCart, handleDelete}) => {
 
     const data = useLoaderData();
-    const productsData = data.data.products;
+    // const productsData = data.data.products;
+    const productsData = data.data;
 
-    // const [handleAddtocart] = useCart(item);
-
-    // const [cart, setCart] = useState([]);
-    // console.log(cart);
-
-    // const handleAddtocart = (product) => {
-    //     const newCart = [...cart, product];
-    //     setCart(newCart);
-        
-    // }
+    
     return (
         <div className='max-w-screen-2 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 px-4'>
             {
@@ -32,7 +23,7 @@ const Products = ({handleAddtoCart, handleDelete}) => {
                         <div className='w-full h-auto flex items-center justify-center relative group'>
                             <img
                                 className="w-52 h-64 object-cover pro-img"
-                                src={item.thumbnail}
+                                src={item.image}
                                 alt={item.title}
                             />
                             <ul className='w-full bg-transparent absolute -bottom-[166px] group-hover:bottom-3 duration-700 flex flex-col items-end justify-center gap-2 font-titleFont px-2 border-1 border-r'>
@@ -62,7 +53,7 @@ const Products = ({handleAddtoCart, handleDelete}) => {
                                 </li>
                                 <li className='productLi relative'>
 
-                                    <span className='addCartIcon hover-trigger'><span className='absolute hover-target'>Add to Cart</span><ShoppingCartIcon className='hov-icon'/></span>
+                                    <span className='addCartIcon hover-trigger' onClick={() => handleAddtoCart(item)}><span className='absolute hover-target'>Add to Cart</span><ShoppingCartIcon className='hov-icon'/></span>
                                 </li>
 
                             </ul>

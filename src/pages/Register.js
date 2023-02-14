@@ -1,8 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { darklogo } from '../assets';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { countrycode } from '../Countrycode/Countrycode';
+import { toast } from 'react-hot-toast';
+import { RotatingLines } from 'react-loader-spinner';
+import {avatar} from '../assets/index'
+import { AuthContext } from '../contexts/AuthProvider/AuthProvider';
+
 
 const Register = () => {
     const [showAll, setShowall] = useState(false);
@@ -12,7 +17,15 @@ const Register = () => {
     const initialvalues = { name: "", phone: "", email: "", password: "" };
     const [formValues, setFormValues] = useState(initialvalues);
     const [formError, setFormError] = useState({});
+    const [loading2, setLoading2] = useState(false);
 
+    const { createUser, upadetUserProfile } = useContext(AuthContext);
+
+    const navigate = useNavigate();
+
+
+
+    //For hide of dropdown div while click on body
     const ref = useRef(null);
 
 
@@ -32,6 +45,7 @@ const Register = () => {
     }
 
 
+
     const handleselect = item => {
         setSelected(item);
         setShowall(false);
@@ -46,12 +60,38 @@ const Register = () => {
         setFormError(error);
 
         if (Object.keys(error).length === 0) {
-            // const userEmail = formValues.email;
-            // const userPass = formValues.password;
-            // const userName = formValues.name;
+            const userEmail = formValues.email;
+            const userPass = formValues.password;
+            const userName = formValues.name;
             // const phone = formValues.phone;
 
-            // handleCheckuser(userEmail, userPass, userName);             
+
+
+            setLoading2(true);
+            createUser(userEmail, userPass)
+                .then((userCredential) => {
+                    upadetUserProfile(userName, avatar).then(console.log('profile updated')).catch(err => err ? console.log(err) : '');
+
+                    // For registration
+                    const user = userCredential.user;
+                    console.log(user);
+                    setLoading2(false);
+                    if (user) {
+                        toast.success("Registration sucessfully done");
+                    }
+                    setFormValues(initialvalues);
+                    setTimeout(() => {
+                        navigate('/signin')
+                    }, 3000);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    // const errorMessage = error.message;
+                    if (errorCode.includes("auth/email-already-in-use")) {
+                        setLoading2(false);
+                        toast.error("Email already in use, try another one")
+                    }
+                });
         }
     }
 
@@ -89,7 +129,7 @@ const Register = () => {
         <div className='w-full'>
             <div className="w-full bg-gray-100 pt-5 pb-10">
                 <form onSubmit={handleSignup} className='w-[350px] mx-auto flex flex-col items-center'>
-                    <img src={darklogo} alt="" className='pb-3' />
+                    <Link to="/"><img src={darklogo} alt="" className='pb-3' /></Link>
                     <div className='w-full border border-zinc-200 p-6'>
                         <h2 className='font-titleFont text-2xl font-medium mb-4'>Create Account</h2>
                         <div className='flex flex-col gap-3'>
@@ -166,7 +206,10 @@ const Register = () => {
                                     formError.password ?
                                         formError.password && <p className='text-xs text-red-500 font-semibold tracking-wide'><span className='italic mr-2'>!</span>{formError.password}</p>
                                         :
-                                        <p className="text-xs font-titleFont"><span className="text-blue-600 text-md mr-2 italic">i</span><span>Passwords must be at least 6 characters.</span></p>
+                                        formValues.password.length > 6 ?
+                                            ''
+                                            :
+                                            <p className="text-xs font-titleFont"><span className="text-blue-600 text-md mr-2 italic">i</span><span>Passwords must be at least 6 characters.</span></p>
                                 }
 
 
@@ -175,6 +218,19 @@ const Register = () => {
                                 <p className='text-xs text-black'>By enrolling your mobile phone number, you consent to receive automated security notifications via text message from Amazon. Message and data rates may apply.</p>
                             </div>
                             <button className="w-full py-1.5 text-sm font-normal rounded-sm bg-gradient-to-t from-[#f7dfa5] to-[#f0c14b] hover:bg-gradient-to-b border border-zinc-400 active:border-yellow-800 active:shadow-amazonInput">Continue</button>
+                            {
+                                loading2 && (
+                                    <div className='flex justify-center'>
+                                        <RotatingLines
+                                            strokeColor="#febb69"
+                                            strokeWidth="5"
+                                            animationDuration="0.75"
+                                            width="50"
+                                            visible={true}
+                                        />
+                                    </div>
+                                )
+                            }
                         </div>
                         <div className='flex flex-col gap-1'>
                             <p className='text-xs text-black leading-4 mt-4'>Already have an account?{" "}<Link to="/signin"><span className="cursor-pointer text-blue-600 hover:text-red-600 hover:underline">Sign in</span></Link></p>
