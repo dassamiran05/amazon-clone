@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
-const Header = ({ AllcartItems }) => {
+const Header = ({ cartItems }) => {
     const [showAll, setShowall] = useState(false);
     const [selected, setSelected] = useState("");
 
@@ -83,7 +83,8 @@ const Header = ({ AllcartItems }) => {
                 <Link to="/cart">
                     <div className="flex items-start justify-center headerHover relative">
                         <ShoppingCartIcon />
-                        <p className="text-xs font-semibold mt-3 text-whiteText">Cart <span className="absolute text-xs -top-1 left-6 font-semibold p-1 h-4 bg-[#f3a847] text-amazon_blue rounded-full flex items-center justify-center">{AllcartItems > 0 ? AllcartItems : 0}</span></p>
+                        <p className="text-xs font-semibold mt-3 text-whiteText">Cart <span className="absolute text-xs -top-1 left-6 font-semibold p-1 h-4 bg-[#f3a847] text-amazon_blue rounded-full flex items-center justify-center">{cartItems.length > 0 ? cartItems.length : 0}</span></p>
+
                     </div>
                 </Link>
                 {/* {

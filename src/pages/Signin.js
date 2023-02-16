@@ -49,13 +49,16 @@ const Signin = () => {
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-                    console.log(user);
                     setLoading2(false);
-                    if (user) {
+                    if(user.emailVerified){
                         toast.success('User logged in successfully');
+                        setTimeout(() => { navigate('/') }, 3000);
+                    }
+                    else{
+                        toast.error('Verify your email');
                     }
                     setFormValues(initialvalues);
-                    setTimeout(() => { navigate('/') }, 3000);
+                    
                 })
                 .catch((error) => {
                     const errorCode = error.code;

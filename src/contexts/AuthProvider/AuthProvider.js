@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import app from "../../firebase/firebase.config";
 
@@ -8,13 +8,8 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    // console.log(user);
 
 
-
-    // const varifyEmail = () => {
-    //     return sendEmailVerification(auth.currentUser);
-    // }
 
     const createUser = (email, password) => {
         setLoading(true);
@@ -40,6 +35,11 @@ const AuthProvider = ({ children }) => {
         })
     }
 
+
+    const varifyEmail = () => {
+        return sendEmailVerification(auth.currentUser);
+    }
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             // if (currentUser) {
@@ -48,8 +48,11 @@ const AuthProvider = ({ children }) => {
             // } else {
             //     setUser(null);
             // }
-            setUser(currentUser);
+            if(currentUser === null || currentUser.emailVerified){
+                setUser(currentUser);
+            }
             setLoading(false);
+            
         })
 
         return () => {
@@ -58,7 +61,7 @@ const AuthProvider = ({ children }) => {
     }, []);
 
 
-    const authInfo = { user, createUser, signInUser, signOutUser, loading, setLoading, upadetUserProfile }
+    const authInfo = { user, createUser, signInUser, signOutUser, loading, setLoading, upadetUserProfile, varifyEmail }
     return (
         <AuthContext.Provider value={authInfo}>
             {children}

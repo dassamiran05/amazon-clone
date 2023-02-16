@@ -13,10 +13,10 @@ import PrivateRoute from './privateRoute/PrivateRoute';
 // import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 // import app from './firebase/firebase.config';
 
-const Main = ({ AllcartItems }) => {
+const Main = ({ cartItems }) => {
   return (
     <div>
-      <Header AllcartItems={AllcartItems} />
+      <Header cartItems={cartItems} />
       <Outlet />
       <Footer />
     </div>
@@ -94,7 +94,7 @@ function App() {
 
   const router = createBrowserRouter(createRoutesFromElements(
     <>
-      <Route path="/" element={<Main AllcartItems={cartItems.length} />}>
+      <Route path="/" element={<Main cartItems={cartItems} />}>
         <Route index element={<Home cartItems={cartItems} handleAddtoCart={handleAddtoCart} handleDelete={handleDelete} />} loader={productsdata}>
         </Route>
         <Route path="/cart" element={<Cart cartItems={cartItems} handleDelete={handleDelete} handleDeleteproduct={handleDeleteproduct} handleAddtoCart={handleAddtoCart} />}>

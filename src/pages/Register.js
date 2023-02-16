@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { darklogo } from '../assets';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { countrycode } from '../Countrycode/Countrycode';
 import { toast } from 'react-hot-toast';
 import { RotatingLines } from 'react-loader-spinner';
@@ -19,9 +19,7 @@ const Register = () => {
     const [formError, setFormError] = useState({});
     const [loading2, setLoading2] = useState(false);
 
-    const { createUser, upadetUserProfile } = useContext(AuthContext);
-
-    const navigate = useNavigate();
+    const { createUser, upadetUserProfile, varifyEmail } = useContext(AuthContext);
 
 
 
@@ -44,7 +42,11 @@ const Register = () => {
         // setFormError(validate(formValues));
     }
 
-
+    const handleEmailVerification = () => {
+        varifyEmail()
+        .then(() => {})
+        .catch(error => console.error(error));
+    }
 
     const handleselect = item => {
         setSelected(item);
@@ -74,15 +76,15 @@ const Register = () => {
 
                     // For registration
                     const user = userCredential.user;
-                    console.log(user);
                     setLoading2(false);
                     if (user) {
-                        toast.success("Registration sucessfully done");
+                        toast.success("Registration done, please verify email");
                     }
                     setFormValues(initialvalues);
-                    setTimeout(() => {
-                        navigate('/signin')
-                    }, 3000);
+                    handleEmailVerification();
+                    // setTimeout(() => {
+                    //     navigate('/signin')
+                    // }, 3000);
                 })
                 .catch((error) => {
                     const errorCode = error.code;

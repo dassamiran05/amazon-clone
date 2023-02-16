@@ -22,7 +22,7 @@ const Products = ({handleAddtoCart, handleDelete}) => {
                         <span className='text-xs capitalize italic absolute top-2 right-2 text-gray-500'>{item.category}</span>
                         <div className='w-full h-auto flex items-center justify-center relative group'>
                             <img
-                                className="w-52 h-64 object-cover pro-img"
+                                className="w-52 h-64 object-contain pro-img"
                                 src={item.image}
                                 alt={item.title}
                             />
