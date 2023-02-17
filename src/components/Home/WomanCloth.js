@@ -1,13 +1,12 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
 import Slider from 'react-slick';
-import './eletronic.css';
+// import './eletronic.css';
 
 const WomanCloth = () => {
     const data = useLoaderData();
     const products = data.data;
     const cloths = products.filter(x => x.category === "women's clothing");
-    console.log(cloths);
 
 
 
@@ -46,9 +45,9 @@ const WomanCloth = () => {
             <Slider {...settings}>
                 {
                     cloths.map(product => (
-                        <div className='px-1.5'>
-                            <div key={product.id} className="bg-[#f7f8f8] product-i h-[220px] items-center justify-center cursor-pointer shadow-none hover:shadow-testShadow duration-200">
-                                <img src={product.image} alt={product.title} className="w-[58%] xl:w-[40%] h-auto object-contain" />
+                        <div className='px-1.5' key={product.id}>
+                            <div key={product.id} className="bg-[#f7f8f8]  h-[220px] items-center justify-center cursor-pointer shadow-none  duration-200 p-3 border-[1px] border-gray-200">
+                                <img src={product.image} alt={product.title} className="w-full h-full object-contain" />
                             </div>
                         </div>
                     ))

@@ -50,6 +50,7 @@ function App() {
 
 
 
+
   const handleDelete = (product) => {
 
     const exists = cartItems.find((x) => x.id === product.id);
@@ -88,7 +89,7 @@ function App() {
 
   //Get cart details from Local Storage
   useEffect(() => {
-    const localData = localStorage.getItem('CartItem');
+    const localData = localStorage.getItem('CartItem') || [];
     setCartItems(localData ? JSON.parse(localData) : []);
   }, []);
 

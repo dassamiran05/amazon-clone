@@ -52,7 +52,7 @@ const Signin = () => {
                     setLoading2(false);
                     if(user.emailVerified){
                         toast.success('User logged in successfully');
-                        setTimeout(() => { navigate('/') }, 3000);
+                        setTimeout(() => { navigate('/') }, 2000);
                     }
                     else{
                         toast.error('Verify your email');

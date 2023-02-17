@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom';
 import { motion } from "framer-motion";
 
 const Cart = ({ cartItems, handleDeleteproduct, handleDelete, handleAddtoCart }) => {
-
-    console.log(cartItems);
     const [totalprice, setTotalprice] = useState(null);
 
     useEffect(() => {

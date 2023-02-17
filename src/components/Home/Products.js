@@ -12,6 +12,8 @@ const Products = ({handleAddtoCart, handleDelete}) => {
     const data = useLoaderData();
     // const productsData = data.data.products;
     const productsData = data.data;
+    
+    // document.getElementById('button').addEventListener('click', function(e) {e.preventDefault()});
 
     
     return (
@@ -73,7 +75,7 @@ const Products = ({handleAddtoCart, handleDelete}) => {
                                     <StarIcon />
                                 </div>
                             </div>
-                            <button  className='w-full font-titleFont font-medium text-base bg-gradient-to-tr from-yellow-400 to-yellow-200 border hover:from-yellow-300 hover:to-yellow-border-yellow-500 hover:border-yellow-700 active:bg-gradient-to-b1 active:from-yellow-400 active:to-yellow-500 duration-200 py-1.5 rounded-md mt-3' onClick={() => handleAddtoCart(item)}>Add to Cart</button>
+                            <button id='button' className='w-full font-titleFont font-medium text-base bg-gradient-to-tr from-yellow-400 to-yellow-200 border hover:from-yellow-300 hover:to-yellow-border-yellow-500 hover:border-yellow-700 active:bg-gradient-to-b1 active:from-yellow-400 active:to-yellow-500 duration-200 py-1.5 rounded-md mt-3' onClick={() => handleAddtoCart(item)}>Add to Cart</button>
                         </div>
                     </div>
                 ))
